@@ -10,6 +10,7 @@ class Axes {
 		x = a;
 		y = b;
 	}
+	Axes () {}
 	friend class Canvas;
 };
 
@@ -25,6 +26,9 @@ public:
 	Canvas (int a, int b) {
 		w = a;
 		h = b;
+		for (int i = 0; i < h; ++i) {
+			canvas.push_back(vector<char>(w, ' '))
+		}
 	}
 	int height() {return h;}
 	int width() {return w;}
