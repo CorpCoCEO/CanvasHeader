@@ -27,7 +27,7 @@ public:
 		w = a;
 		h = b;
 		for (int i = 0; i < h; ++i) {
-			canvas.push_back(vector<char>(w, ' '))
+			canvas.push_back(vector<char>(w, ' '));
 		}
 	}
 	int height() {return h;}
