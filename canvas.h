@@ -35,9 +35,10 @@ public:
 	void print(ostream&);
 	char& operator() (int, int);
 	void plotaxes(int, int);
-	void plotpoint(int, int, char);
-	void plotpoint(int, int);
+	void plotpoint(pair<int, int>, char);
+	void plotpoint(pair<int, int>);
 	void plotfunction(int (*func)(int), char);
+	void plotfunction(int (*func)(int));
 
 };
 
@@ -49,10 +50,11 @@ pair<int, int> Canvas::plot(int a, int b) {
 }
 
 void Canvas::print(ostream& dest) {
-	for (int n = 0; n < h; ++n) {
-		for (int m = 0; m < w; ++n) {
+	for (int n = 0; n < h; n++) {
+		for (int m = 0; m < w; n++) {
 			dest << canvas[n][m];
 		}
+		dest << endl;
 	}
 	return;
 }
@@ -78,28 +80,32 @@ void Canvas::plotaxes(int i, int j) {
 	haveaxes = true;
 }
 
-void Canvas::plotpoint(int a, int b, char c) {
+void Canvas::plotpoint(pair<int, int> coord, char c) {
 	if (haveaxes == false) {
 		cerr << "No Axes on Canvas" << endl;
 	}
 	else {
-		pair<int, int> coord = plot(a, b);
 		canvas[coord.first][coord.second] = c;
 	}
 }
 
-void Canvas::plotpoint(int a, int b) {
+void Canvas::plotpoint(pair<int, int> coord) {
 	if (haveaxes == false) {
 		cerr << "No Axes on Canvas" << endl;
 	}
 	else {
-		pair<int, int> coord = plot(a, b);
 		canvas[coord.first][coord.second] = '@';
 	}
 }
 
-void Canvas::plotfunction(int (*func)(int), char c) {
-	for (int n = 0; n < w; ++n) {
-		plotpoint(n, func(n), c);
+void Canvas::plotfunction(int (*func)(int)) {
+	for(int n = 0; n < w; n++) {
+		int x = n - axes.x;
+		int y = int(func(x));
+		int m = axes.y - x;
+		cout << n << x << y << m << endl;
+		if ((m * m) > 0 && m >= 0 && m < h) {
+			canvas[m][n] = '@';
+		}
 	}
 }
